@@ -916,6 +916,106 @@
           }
         }
       }
+    },
+    "example-theia-theia-browser": {
+      "root": "examples/example/theia/theia-browser",
+      "sourceRoot": "examples/example/theia/theia-browser/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/examples/example/theia/theia-browser",
+            "index": "examples/example/theia/theia-browser/src/index.html",
+            "main": "examples/example/theia/theia-browser/src/main.ts",
+            "polyfills": "examples/example/theia/theia-browser/src/polyfills.ts",
+            "tsConfig": "examples/example/theia/theia-browser/tsconfig.app.json",
+            "assets": [
+              "examples/example/theia/theia-browser/src/favicon.ico",
+              "examples/example/theia/theia-browser/src/assets"
+            ],
+            "styles": ["examples/example/theia/theia-browser/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "examples/example/theia/theia-browser/src/environments/environment.ts",
+                  "with": "examples/example/theia/theia-browser/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "example-theia-theia-browser:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "example-theia-theia-browser:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["examples/example/theia/theia-browser/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "examples/example/theia/theia-browser/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "example/theia-theia-browser-e2e": {
+      "root": "examples/example/theia/theia-browser-e2e",
+      "sourceRoot": "examples/example/theia/theia-browser-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "examples/example/theia/theia-browser-e2e/cypress.json",
+            "tsConfig": "examples/example/theia/theia-browser-e2e/tsconfig.e2e.json",
+            "devServerTarget": "example-theia-theia-browser:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "example-theia-theia-browser:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "examples/example/theia/theia-browser-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
@@ -987,5 +1087,6 @@
     "@nrwl/angular:library": {
       "unitTestRunner": "jest"
     }
-  }
+  },
+  "defaultProject": "example-theia-theia-browser"
 }

@@ -89,6 +89,13 @@
     },
     "plugin-theia": {
       "tags": []
+    },
+    "example-theia-theia-browser": {
+      "tags": []
+    },
+    "example/theia-theia-browser-e2e": {
+      "tags": [],
+      "implicitDependencies": ["example-theia-theia-browser"]
     }
   },
   "workspaceLayout": {
