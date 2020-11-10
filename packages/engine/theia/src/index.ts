@@ -9,5 +9,3 @@ export * from './lib/terminal';
 export * from './lib/dynamic_list';
 export * from './lib/plugin_connector';
 
-
-
