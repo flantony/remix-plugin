@@ -1,29 +1,14 @@
-import { CommandContribution} from '@theia/core';
-import { WebSocketConnectionProvider } from "@theia/core/lib/browser";
-import { ContainerModule, injectable } from "inversify";
-import { BackendClient, HelloBackendWithClientService, HelloBackendService, HELLO_BACKEND_PATH, HELLO_BACKEND_WITH_CLIENT_PATH } from '../common/protocol';
-import { RemixTheiaCommandContribution} from './remix-theia-contribution';
+import { CommandContribution, MenuContribution} from '@theia/core';
+import { FrontendApplicationContribution } from "@theia/core/lib/browser";
+import { ContainerModule } from "inversify";
+import { RemixConsoleLogContribution,RemixConsoleLogMenuContribution } from './remix-console-log-contribution';
+import { RemixEngineFrontendContribution } from './remix-engine-frontend-contribution';
+import { RemixEngineService } from './remix-engine-service';
 
 export default new ContainerModule(bind => {
-    bind(CommandContribution).to(RemixTheiaCommandContribution).inSingletonScope();
-    bind(BackendClient).to(BackendClientImpl).inSingletonScope();
-
-    bind(HelloBackendService).toDynamicValue(ctx => {
-        const connection = ctx.container.get(WebSocketConnectionProvider);
-        return connection.createProxy<HelloBackendService>(HELLO_BACKEND_PATH);
-    }).inSingletonScope();
-
-    bind(HelloBackendWithClientService).toDynamicValue(ctx => {
-        const connection = ctx.container.get(WebSocketConnectionProvider);
-        const backendClient: BackendClient = ctx.container.get(BackendClient);
-        return connection.createProxy<HelloBackendWithClientService>(HELLO_BACKEND_WITH_CLIENT_PATH, backendClient);
-    }).inSingletonScope();
+    bind(RemixEngineService).to(RemixEngineService).inSingletonScope();
+    bind(RemixEngineFrontendContribution).to(RemixEngineFrontendContribution);
+    bind(CommandContribution).to(RemixConsoleLogContribution);
+    bind(MenuContribution).to(RemixConsoleLogMenuContribution);
+    bind(FrontendApplicationContribution).to(RemixEngineFrontendContribution);
 });
-
-@injectable()
-class BackendClientImpl implements BackendClient {
-    getName(): Promise<string> {
-        return new Promise(resolve => resolve('Client'));
-    }
-
-}

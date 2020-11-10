@@ -3,6 +3,8 @@
   "name": "browser-app",
   "version": "0.0.0",
   "dependencies": {
+    "@remixproject/engine": "^0.3.2",
+    "@remixproject/plugin-utils": "^0.3.2",
     "@theia/core": "latest",
     "@theia/editor": "latest",
     "@theia/filesystem": "latest",

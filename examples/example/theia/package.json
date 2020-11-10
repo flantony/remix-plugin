@@ -6,9 +6,12 @@
     "rebuild:electron": "theia rebuild:electron"
   },
   "devDependencies": {
+    "@remixproject/plugin-api": "^0.3.2",
     "lerna": "2.4.0"
   },
   "workspaces": [
-    "remix-theia", "browser-app", "electron-app"
+    "remix-theia",
+    "browser-app",
+    "electron-app"
   ]
 }
